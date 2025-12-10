@@ -42,8 +42,11 @@ const POSScreen = () => {
 
   const handleAddToOrder = (orderItem) => {
     setOrderItems([...orderItems, orderItem]);
-    // Auto open payment modal after adding to order
-    setTimeout(() => setShowPaymentModal(true), 300);
+  };
+
+  const handleRemoveItem = (index) => {
+    const newItems = orderItems.filter((_, i) => i !== index);
+    setOrderItems(newItems);
   };
 
   const handlePaymentComplete = (paymentData) => {
@@ -55,24 +58,32 @@ const POSScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Header onSearch={setSearchQuery} />
-      <CategoryTabs
-        categories={categories}
-        activeCategory={activeCategory}
-        onSelectCategory={setActiveCategory}
-      />
-      <FlatList
-        data={filteredProducts}
-        renderItem={({ item }) => (
-          <View style={[styles.productContainer, { width: `${100 / getNumColumns()}%` }]}>
-            <ProductCard product={item} onPress={() => setSelectedProduct(item)} />
-          </View>
-        )}
-        keyExtractor={(item) => item.id}
-        numColumns={getNumColumns()}
-        key={getNumColumns()}
-        contentContainerStyle={styles.productsGrid}
-        showsVerticalScrollIndicator={false}
+      <View style={styles.mainSection}>
+        <Header onSearch={setSearchQuery} />
+        <CategoryTabs
+          categories={categories}
+          activeCategory={activeCategory}
+          onSelectCategory={setActiveCategory}
+        />
+        <FlatList
+          data={filteredProducts}
+          renderItem={({ item }) => (
+            <View style={[styles.productContainer, { width: `${100 / getNumColumns()}%` }]}>
+              <ProductCard product={item} onPress={() => setSelectedProduct(item)} />
+            </View>
+          )}
+          keyExtractor={(item) => item.id}
+          numColumns={getNumColumns()}
+          key={getNumColumns()}
+          contentContainerStyle={styles.productsGrid}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
+
+      <CartSidebar
+        orderItems={orderItems}
+        onCheckout={() => setShowPaymentModal(true)}
+        onRemoveItem={handleRemoveItem}
       />
 
       {selectedProduct && (
