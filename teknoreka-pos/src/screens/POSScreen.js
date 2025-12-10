@@ -110,7 +110,11 @@ const POSScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
     backgroundColor: colors.background,
+  },
+  mainSection: {
+    flex: 1,
   },
   productsGrid: {
     padding: 16,
