@@ -11,6 +11,7 @@ import CategoryTabs from '../components/CategoryTabs';
 import ProductCard from '../components/ProductCard';
 import ProductDetailModal from '../components/ProductDetailModal';
 import PaymentModal from '../components/PaymentModal';
+import CartSidebar from '../components/CartSidebar';
 import { colors } from '../utils/colors';
 import { products, categories } from '../data/products';
 
